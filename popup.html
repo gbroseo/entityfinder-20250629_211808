@@ -1,0 +1,118 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'; object-src 'none'">
+    <title>EntityScout Pro</title>
+    <link rel="stylesheet" href="styles/popup.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <img src="icons/icon48.png" alt="EntityScout Pro" class="logo-icon" onerror="this.style.display='none'">
+                <h1 class="title">EntityScout Pro</h1>
+            </div>
+            <div class="status-indicator" id="statusIndicator">
+                <span class="status-dot" id="statusDot"></span>
+                <span class="status-text" id="statusText">Ready</span>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="analysis-section">
+                <h2 class="section-title">Current Page Analysis</h2>
+                <div class="url-display">
+                    <input type="text" id="currentUrl" class="url-input" readonly>
+                    <button id="refreshUrl" class="refresh-btn" title="Refresh URL">
+                        <img src="icons/refresh.svg" alt="Refresh" width="16" height="16" onerror="this.innerHTML='?'">
+                    </button>
+                </div>
+                
+                <div class="action-buttons">
+                    <button id="analyzeBtn" class="btn btn-primary">
+                        <span class="btn-icon">?</span>
+                        Analyze Entities
+                    </button>
+                    <button id="competitorBtn" class="btn btn-secondary">
+                        <span class="btn-icon">??</span>
+                        Competitor Analysis
+                    </button>
+                </div>
+            </div>
+
+            <div class="results-section" id="resultsSection">
+                <div class="section-header">
+                    <h2 class="section-title">Analysis Results</h2>
+                    <button id="exportBtn" class="btn btn-small" disabled>Export</button>
+                </div>
+                
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="entities">Entities</button>
+                    <button class="tab-btn" data-tab="insights">Insights</button>
+                    <button class="tab-btn" data-tab="competitors">Competitors</button>
+                </div>
+
+                <div class="tab-content">
+                    <div id="entitiesTab" class="tab-pane active">
+                        <div class="filter-controls">
+                            <select id="categoryFilter" class="filter-select">
+                                <option value="">All Categories</option>
+                            </select>
+                            <input type="range" id="confidenceFilter" class="confidence-slider" min="0" max="100" value="0">
+                            <span class="confidence-label">Min Confidence: <span id="confidenceValue">0%</span></span>
+                        </div>
+                        <div id="entitiesList" class="entities-list">
+                            <div class="no-results">No entities found. Run an analysis to see results.</div>
+                        </div>
+                    </div>
+
+                    <div id="insightsTab" class="tab-pane">
+                        <div id="insightsList" class="insights-list">
+                            <div class="no-results">No insights available. Run an analysis to generate insights.</div>
+                        </div>
+                    </div>
+
+                    <div id="competitorsTab" class="tab-pane">
+                        <div class="competitor-input">
+                            <input type="url" id="competitorUrl" class="url-input" placeholder="Enter competitor URL">
+                            <button id="addCompetitorBtn" class="btn btn-small">Add</button>
+                        </div>
+                        <div id="competitorsList" class="competitors-list">
+                            <div class="no-results">No competitors added. Add competitor URLs to compare entities.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="loading-overlay" id="loadingOverlay">
+                <div class="loading-spinner"></div>
+                <p class="loading-text">Analyzing entities...</p>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="stats">
+                <span class="stat">
+                    <span class="stat-label">Entities:</span>
+                    <span id="entityCount" class="stat-value">0</span>
+                </span>
+                <span class="stat">
+                    <span class="stat-label">Avg Confidence:</span>
+                    <span id="avgConfidence" class="stat-value">0%</span>
+                </span>
+            </div>
+            <div class="footer-actions">
+                <button id="settingsBtn" class="btn btn-icon" title="Settings">
+                    <img src="icons/settings.svg" alt="Settings" width="16" height="16" onerror="this.innerHTML='?'">
+                </button>
+                <button id="helpBtn" class="btn btn-icon" title="Help">
+                    <img src="icons/help.svg" alt="Help" width="16" height="16" onerror="this.innerHTML='?'">
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <script src="scripts/popup.js"></script>
+</body>
+</html>
