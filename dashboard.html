@@ -1,0 +1,255 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:">
+    <title>EntityScout Pro Dashboard</title>
+    <link rel="stylesheet" href="styles/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1 class="logo">EntityScout Pro</h1>
+                <nav class="main-nav">
+                    <button class="nav-btn active" data-tab="overview">Overview</button>
+                    <button class="nav-btn" data-tab="entities">Entities</button>
+                    <button class="nav-btn" data-tab="competitors">Competitors</button>
+                    <button class="nav-btn" data-tab="reports">Reports</button>
+                    <button class="nav-btn" data-tab="settings">Settings</button>
+                </nav>
+            </div>
+        </header>
+
+        <main class="dashboard-main">
+            <div class="tab-content active" id="overview">
+                <div class="overview-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <h3>Total Entities</h3>
+                            <svg class="stat-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 3v18h18V3H3zm16 16H5V5h14v14z" fill="currentColor"/>
+                                <path d="M7 7h10v2H7V7zm0 4h10v2H7v-2zm0 4h7v2H7v-2z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="stat-value" id="total-entities">0</div>
+                        <div class="stat-change positive" id="entities-change">+0%</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <h3>Competitors Tracked</h3>
+                            <svg class="stat-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                                <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="stat-value" id="competitors-count">0</div>
+                        <div class="stat-change" id="competitors-change">+0%</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <h3>Average Confidence</h3>
+                            <svg class="stat-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <polygon points="13,2 3,14 12,14 11,22 21,10 12,10" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="stat-value" id="avg-confidence">0%</div>
+                        <div class="stat-change" id="confidence-change">+0%</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <h3>Last Scan</h3>
+                            <svg class="stat-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                <polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="stat-value" id="last-scan">Never</div>
+                    </div>
+                </div>
+
+                <div class="overview-charts">
+                    <div class="chart-container">
+                        <h3>Entity Confidence Distribution</h3>
+                        <canvas id="confidenceChart"></canvas>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <h3>Top Entity Categories</h3>
+                        <div class="category-list" id="top-categories"></div>
+                    </div>
+                </div>
+
+                <div class="recent-activity">
+                    <h3>Recent Activity</h3>
+                    <div class="activity-list" id="activity-list">
+                        <div class="activity-item">
+                            <svg class="activity-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                                <path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span class="activity-text">No recent activity</span>
+                            <span class="activity-time">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="entities">
+                <div class="entities-header">
+                    <h2>Entity Analysis</h2>
+                    <div class="entities-controls">
+                        <input type="text" id="entity-search" placeholder="Search entities..." class="search-input">
+                        <select id="entity-filter" class="filter-select">
+                            <option value="">All Categories</option>
+                            <option value="Person">Person</option>
+                            <option value="Organization">Organization</option>
+                            <option value="Location">Location</option>
+                            <option value="Product">Product</option>
+                        </select>
+                        <button id="analyze-btn" class="primary-btn">Analyze Current Page</button>
+                    </div>
+                </div>
+                
+                <div class="entities-table-container">
+                    <table class="entities-table">
+                        <thead>
+                            <tr>
+                                <th>Entity</th>
+                                <th>Category</th>
+                                <th>Confidence</th>
+                                <th>Frequency</th>
+                                <th>Source</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="entities-tbody">
+                            <tr class="empty-state">
+                                <td colspan="6">No entities found. Start by analyzing a page.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tab-content" id="competitors">
+                <div class="competitors-header">
+                    <h2>Competitor Tracking</h2>
+                    <button id="add-competitor-btn" class="primary-btn">Add Competitor</button>
+                </div>
+                
+                <div class="competitors-grid" id="competitors-grid">
+                    <div class="empty-state">
+                        <p>No competitors added yet. Click "Add Competitor" to start tracking.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="reports">
+                <div class="reports-header">
+                    <h2>SEO Reports</h2>
+                    <div class="reports-controls">
+                        <select id="report-type" class="filter-select">
+                            <option value="entity-gap">Entity Gap Analysis</option>
+                            <option value="competitor-comparison">Competitor Comparison</option>
+                            <option value="opportunity">Opportunity Analysis</option>
+                        </select>
+                        <button id="generate-report-btn" class="primary-btn">Generate Report</button>
+                    </div>
+                </div>
+                
+                <div class="report-content" id="report-content">
+                    <div class="empty-state">
+                        <p>Select a report type and click "Generate Report" to view insights.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="settings">
+                <div class="settings-header">
+                    <h2>Settings</h2>
+                </div>
+                
+                <div class="settings-sections">
+                    <div class="settings-section">
+                        <h3>API Configuration</h3>
+                        <div class="form-group">
+                            <label for="api-key">TextRazor API Key</label>
+                            <div class="api-key-input-group">
+                                <input type="password" id="api-key" placeholder="Enter your API key" autocomplete="off" spellcheck="false">
+                                <button type="button" id="toggle-api-key" class="toggle-password-btn" aria-label="Toggle API key visibility">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/>
+                                        <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <button id="test-api-btn" class="secondary-btn">Test Connection</button>
+                        </div>
+                        <div class="api-status" id="api-status">
+                            <span class="status-indicator"></span>
+                            <span class="status-text">Not configured</span>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h3>Analysis Settings</h3>
+                        <div class="form-group">
+                            <label for="confidence-threshold">Minimum Confidence Threshold</label>
+                            <input type="range" id="confidence-threshold" min="0" max="100" value="70">
+                            <span id="confidence-value">70%</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="auto-analyze">
+                                <input type="checkbox" id="auto-analyze">
+                                Automatically analyze pages on visit
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h3>Data Management</h3>
+                        <div class="form-group">
+                            <button id="export-data-btn" class="secondary-btn">Export Data</button>
+                            <button id="clear-data-btn" class="danger-btn">Clear All Data</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal" id="add-competitor-modal" data-backdrop-close="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Competitor</h3>
+                <button class="modal-close" data-modal="add-competitor-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="competitor-url">Website URL</label>
+                    <input type="url" id="competitor-url" placeholder="https://example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="competitor-name">Display Name</label>
+                    <input type="text" id="competitor-name" placeholder="Company Name" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="secondary-btn" data-modal="add-competitor-modal">Cancel</button>
+                <button class="primary-btn" id="save-competitor-btn">Add Competitor</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="spinner"></div>
+        <p>Processing...</p>
+    </div>
+
+    <script src="scripts/dashboard.js"></script>
+</body>
+</html>
