@@ -1,3 +1,5 @@
+importScripts('storagemanager.js', 'syncmanager.js');
+
 let quotaUsage = 0;
 let apiKey = '';
 let isProcessing = false;
@@ -7,10 +9,14 @@ async function init() {
     const result = await chrome.storage.sync.get(['apiKey', 'quotaUsage']);
     apiKey = result.apiKey || '';
     quotaUsage = result.quotaUsage || 0;
-    
+
     if (!apiKey) {
       chrome.action.setBadgeText({ text: '!' });
       chrome.action.setBadgeBackgroundColor({ color: '#ff0000' });
+    }
+
+    if (typeof syncManager !== 'undefined') {
+      await syncManager.init();
     }
   } catch (error) {
     console.error('Initialization error:', error);

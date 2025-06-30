@@ -13,6 +13,7 @@ EntityScout Pro is designed for SEO professionals, content marketers, and compet
 - **Interactive Dashboard**: Visual analytics with charts, filters, and historical comparisons
 - **Multi-format Export**: Export analysis results to CSV, JSON, and PDF formats
 - **Historical Tracking**: Save and compare analyses over time
+- **Automatic Sync**: Analyses are synced across devices via Chrome storage
 - **Real-time Progress**: Live updates during content processing
 - **Advanced Filtering**: Sort and filter entities by type, confidence, and relevance
 - **Bulk Analysis**: Process multiple URLs simultaneously (Premium feature)
