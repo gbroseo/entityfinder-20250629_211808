@@ -1,0 +1,149 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EntityScout Pro - Settings</title>
+    <link rel="stylesheet" href="styles/options.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>EntityScout Pro Settings</h1>
+            <p>Configure your competitive SEO analysis preferences</p>
+        </header>
+
+        <main class="main-content">
+            <form id="settings-form">
+                <section class="api-settings">
+                    <h2>API Configuration</h2>
+                    <div class="form-group">
+                        <label for="textrazor-api-key">TextRazor API Key</label>
+                        <div class="input-with-toggle">
+                            <input type="password" id="textrazor-api-key" placeholder="Enter your TextRazor API key" aria-describedby="api-key-desc" aria-invalid="false">
+                            <button type="button" id="toggle-api-key" class="btn btn-icon" aria-label="Show/hide API key">??</button>
+                        </div>
+                        <div id="api-key-desc" class="help-text">Your TextRazor API key for entity extraction services</div>
+                        <button type="button" id="test-api" class="btn btn-secondary">Test Connection</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="api-rate-limit">Rate Limit (requests/minute)</label>
+                        <input type="number" id="api-rate-limit" min="1" max="100" value="10" aria-describedby="rate-limit-desc">
+                        <div id="rate-limit-desc" class="help-text">Maximum number of API requests per minute</div>
+                    </div>
+                </section>
+
+                <section class="extraction-settings">
+                    <h2>Entity Extraction Settings</h2>
+                    <div class="form-group">
+                        <label for="confidence-threshold">Minimum Confidence Score</label>
+                        <input type="range" id="confidence-threshold" min="0" max="1" step="0.01" value="0.5" aria-describedby="confidence-desc" aria-valuemin="0" aria-valuemax="1" aria-valuenow="0.5">
+                        <span id="confidence-value" aria-live="polite">0.5</span>
+                        <div id="confidence-desc" class="help-text">Minimum confidence score for entity extraction (0-1)</div>
+                    </div>
+                    <div class="form-group">
+                        <fieldset>
+                            <legend>Entity Types to Extract</legend>
+                            <div class="checkbox-group" role="group" aria-describedby="entity-types-desc">
+                                <label><input type="checkbox" name="entity-types" value="Person" checked> Person</label>
+                                <label><input type="checkbox" name="entity-types" value="Organization" checked> Organization</label>
+                                <label><input type="checkbox" name="entity-types" value="Location" checked> Location</label>
+                                <label><input type="checkbox" name="entity-types" value="Product" checked> Product</label>
+                                <label><input type="checkbox" name="entity-types" value="Technology" checked> Technology</label>
+                                <label><input type="checkbox" name="entity-types" value="Topic" checked> Topic</label>
+                            </div>
+                            <div id="entity-types-desc" class="help-text">Select which types of entities to extract from content</div>
+                        </fieldset>
+                    </div>
+                    <div class="form-group">
+                        <label for="max-entities">Maximum Entities per Page</label>
+                        <input type="number" id="max-entities" min="10" max="500" value="100" aria-describedby="max-entities-desc">
+                        <div id="max-entities-desc" class="help-text">Maximum number of entities to extract per page</div>
+                    </div>
+                </section>
+
+                <section class="analysis-settings">
+                    <h2>Analysis Configuration</h2>
+                    <div class="form-group">
+                        <label for="competitor-domains">Competitor Domains (one per line)</label>
+                        <textarea id="competitor-domains" rows="5" placeholder="competitor1.com&#10;competitor2.com&#10;competitor3.com" aria-describedby="domains-desc"></textarea>
+                        <div id="domains-desc" class="help-text">Enter competitor domain names, one per line</div>
+                    </div>
+                    <div class="form-group">
+                        <label><input type="checkbox" id="auto-analyze"> Auto-analyze on page load</label>
+                    </div>
+                    <div class="form-group">
+                        <label><input type="checkbox" id="sentiment-analysis"> Enable sentiment analysis</label>
+                    </div>
+                    <div class="form-group">
+                        <label><input type="checkbox" id="relation-extraction"> Extract entity relations</label>
+                    </div>
+                </section>
+
+                <section class="export-settings">
+                    <h2>Export & Reporting</h2>
+                    <div class="form-group">
+                        <label for="export-format">Default Export Format</label>
+                        <select id="export-format" aria-describedby="export-format-desc">
+                            <option value="json">JSON</option>
+                            <option value="csv">CSV</option>
+                            <option value="xlsx">Excel (XLSX)</option>
+                        </select>
+                        <div id="export-format-desc" class="help-text">Default file format for exporting analysis data</div>
+                    </div>
+                    <div class="form-group">
+                        <label><input type="checkbox" id="include-metadata"> Include metadata in exports</label>
+                    </div>
+                    <div class="form-group">
+                        <label><input type="checkbox" id="auto-backup"> Auto-backup analysis data</label>
+                    </div>
+                </section>
+
+                <section class="display-settings">
+                    <h2>Display Preferences</h2>
+                    <div class="form-group">
+                        <label for="theme">Theme</label>
+                        <select id="theme" aria-describedby="theme-desc">
+                            <option value="light">Light</option>
+                            <option value="dark">Dark</option>
+                            <option value="auto">Auto (system preference)</option>
+                        </select>
+                        <div id="theme-desc" class="help-text">Choose your preferred color theme</div>
+                    </div>
+                    <div class="form-group">
+                        <label><input type="checkbox" id="show-tooltips"> Show help tooltips</label>
+                    </div>
+                    <div class="form-group">
+                        <label><input type="checkbox" id="compact-view"> Compact entity display</label>
+                    </div>
+                </section>
+
+                <section class="privacy-settings">
+                    <h2>Privacy & Data</h2>
+                    <div class="form-group">
+                        <label><input type="checkbox" id="store-locally"> Store analysis data locally</label>
+                    </div>
+                    <div class="form-group">
+                        <label><input type="checkbox" id="anonymous-usage"> Allow anonymous usage analytics</label>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" id="clear-data" class="btn btn-danger">Clear All Stored Data</button>
+                    </div>
+                </section>
+            </form>
+        </main>
+
+        <footer class="footer">
+            <div class="button-group">
+                <button type="submit" form="settings-form" id="save-settings" class="btn btn-primary">Save Settings</button>
+                <button type="button" id="reset-settings" class="btn btn-secondary">Reset to Defaults</button>
+                <button type="button" id="export-settings" class="btn btn-secondary">Export Settings</button>
+                <label for="import-settings" class="btn btn-secondary">Import Settings</label>
+                <input type="file" id="import-settings" accept=".json" class="visually-hidden">
+            </div>
+            <div class="status-message" id="status-message" role="status" aria-live="polite"></div>
+        </footer>
+    </div>
+
+    <script src="scripts/options.js"></script>
+</body>
+</html>
